@@ -1,0 +1,17 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+table {
+    table-layout: fixed;
+}
+
+.hide-overflow {
+    overflow: hidden;
+}
+
+.sortColumn:hover {
+    cursor: pointer;
+    color: #005580;
+}

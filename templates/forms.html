@@ -1,0 +1,12 @@
+{% macro shortcut_form(name='') -%}
+{%- import 'search.html' as search -%}
+<form class="well form-inline" id="shortcut-form" method="post" action="/_create">
+  <label>Shortcut</label>
+  <input class="input-small" type="text" id="name" name="name" placeholder="Shortcut"{% if name %} value="{{ name }}"{% endif %}/>
+  <label>URL</label>
+  <input class="input-xlarge" type="text" id="url" name="url" placeholder=""/>
+  <input class="input-xlarge" type="text" id="secondary_url" name="secondary_url" placeholder="optional URL with %s in place"/>
+  <button class="btn btn-primary btn-medium" id="create-button">Create Shortcut</button>
+</form>
+{{ search.search_results() }}
+{%- endmacro %}

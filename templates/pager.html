@@ -1,0 +1,18 @@
+<nav>
+  <ul class="pager">
+    <li{% if offset == 0 %} class="disabled"{% endif %}>
+      {% if offset == 0 %}
+        <a>&larr; Previous</a>
+      {% else %}
+        <a href="?{{ previous }}">&larr; Previous</a>
+      {% endif %}
+    </li>
+    <li{% if not has_next %} class="disabled"{% endif %}>
+      {% if not has_next %}
+        <a>Next &rarr;</a>
+      {% else %}
+        <a href="?{{ next }}">Next &rarr;</a>
+      {% endif %}
+    </li>
+  </ul>
+</nav>

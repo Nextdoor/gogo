@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{%- block title %}Add Shortcut{% endblock %}
+{%- import 'forms.html' as forms -%}
+{% block content %}
+<div>
+  {{ forms.shortcut_form(name) }}
+</div>
+<script>
+  $().ready(function() {
+    addAlert('Shortcut <strong>{{ name }}</strong> does not exist, but you can create it now!',
+             'alert-info');
+    $('#url').focus();
+  });
+</script>
+{% endblock %}

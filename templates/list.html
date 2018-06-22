@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{%- block title %}All Shortcuts{% endblock %}
+{% block content %}
+
+<div id="all-shortcuts">
+  <h2>All Shortcuts</h2>
+  <table class="table table-striped table-bordered table-condensed">
+    <colgroup width="100">
+    <colgroup width="100">
+    <colgroup width="400">
+    <thead>
+      <tr>
+        <th class="sortColumn" data-val="name">Shortcut</th>
+        <th class="sortColumn" data-val="owner">Owner</th>
+        <th class="sortColumn" data-val="url">URL</th>
+        <th class="sortColumn" data-val="secondaryUrl">Secondary URL</th>
+        <th class="sortColumn" data-val="hits">Hits</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    {%- for s in shortcuts %}
+    <tr>
+      <td class="hide-overflow">go/{{ s.name }}</td>
+      <td class="hide-overflow">{{ s.owner }}</td>
+      <td class="hide-overflow"><a href="{{ s.url  }}">{{ s.url }}</a></td>
+      <td class="hide-overflow">{{ s.secondary_url if s.secondary_url != None else '' }}</td>
+      <td class="hide-overflow">{{ s.hits }}</td>
+      <td><a href="_edit?name={{ s.name }}"><i class="icon-pencil"></i></a></td>
+    </tr>
+    {%- endfor %}
+  </table>
+</div>
+{% include 'pager.html' %}
+{% endblock %}

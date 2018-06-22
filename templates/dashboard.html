@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{%- block title %}Dashboard{% endblock %}
+{%- import 'forms.html' as forms -%}
+{% block content %}
+<div>
+  {{ forms.shortcut_form() }}
+</div>
+
+<div id="my-shortcuts">
+  <h2>My Shortcuts</h2>
+  <table class="table table-striped table-bordered table-condensed" id="shortcut-table">
+    <colgroup width="100">
+    <colgroup width="400">
+    <thead>
+      <tr>
+        <th class="sortColumn" data-val="name">Shortcut</th>
+        <th class="sortColumn" data-val="url">URL</th>
+        <th class="sortColumn" data-val="secondaryUrl">Secondary URL</th>
+        <th class="sortColumn" data-val="hits">Hits</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    {%- for s in shortcuts %}
+    <tr>
+      <td class="hide-overflow">go/{{ s.name }}</td>
+      <td class="hide-overflow"><a href="{{ s.url  }}">{{ s.url }}</a></td>
+      <td class="hide-overflow">{{ s.secondary_url if s.secondary_url != None else '' }}</td>
+      <td class="hide-overflow">{{ s.hits }}</td>
+      <td><a href="_edit?name={{ s.name }}"><i class="icon-pencil"></i></a></td>
+    </tr>
+    {%- endfor %}
+  </table>
+</div>
+{% include 'pager.html' %}
+
+<h3><a href="/_list">View all Nextdoor Go links here</a></h3>
+
+<script>
+{%- if not shortcuts %}
+  $('#shortcuts').hide();
+{% endif -%}
+{% if error -%}
+  addAlert('Error: {{ error|e }}');
+{% elif created -%}
+  addAlert('Shortcut <strong>{{ created|e }}</strong> was created', 'alert-success');
+{% elif edited -%}
+  addAlert('Shortcut <strong>{{ edited|e }}</strong> was updated', 'alert-success');
+{% endif -%}
+</script>
+{% endblock %}
