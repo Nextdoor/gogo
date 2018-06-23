@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-REQUIRED_VARS="CONFIG DATABASE_HOST BASE_URL GOOGLE_CLIENT_ID HOSTED_DOMAIN TITLE"
+REQUIRED_VARS="CONFIG DATABASE_URI BASE_URL GOOGLE_CLIENT_ID HOSTED_DOMAIN TITLE"
 
 EXIT=0
 for VAR in $REQUIRED_VARS; do
@@ -51,7 +51,6 @@ sed -e "s#{base_url}#${BASE_URL}#g" \
 /usr/sbin/nginx -c /app/resources/nginx.conf -p /app/ &
 
 export APP_SETTINGS="config.${CONFIG}"
-export DATABASE_URI="postgresql://gogo:gogo@${DATABASE_HOST}/gogo"
 
 if [[ -n "$SESSION_SECRET_KEY" ]]; then
     export SESSION_SECRET_KEY=$SESSION_SECRET_KEY

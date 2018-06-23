@@ -14,7 +14,7 @@ define DOCKER_RUN_ARGS
 --name $(DOCKER_IMAGE) \
 --publish 80:80 \
 --env CONFIG=DevelopmentConfig \
---env DATABASE_HOST=gogo-postgres \
+--env DATABASE_URI=postgresql://gogo:gogo@gogo-postgres/gogo \
 --env BASE_URL=http://localhost \
 --env-file envfile \
 --hostname gogo-dev \

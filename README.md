@@ -21,3 +21,9 @@ The local service may be accessed at `http://localhost`.
 
 ## PyCharm development
 I recommend setting the venv built with `make venv` as the remote interpreter.
+
+## Environment Variables
+`DATABASE_URI` should be a full postgres connection string, like
+ ```
+postgresql://<username>:<password>@<hostname>/<database>
+```
