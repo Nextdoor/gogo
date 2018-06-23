@@ -39,21 +39,21 @@ class OAuth2Callback(MethodView):
             return flask.redirect(flow.step1_get_authorize_url())
         credentials = flow.step2_exchange(code)
         try:
-            flask.session['user'] = query_user(credentials)
+            flask.session['user'] = query_user(credentials, flask.current_app.config['HOSTED_DOMAIN'])
         except ValueError:
             flask.session.pop('after_auth')
             return 'Unauthorized', 401
         return flask.redirect('/')
 
 
-def query_user(credentials):
+def query_user(credentials, hosted_domain):
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('oauth2', 'v2', http=http)
     result = service.userinfo().get().execute()
     email = result['email']
-    if '@nextdoor.com' not in email:
-        raise ValueError('Must be a Nextdoor domain.')
-    return email.split('@nextdoor.com')[0]
+    if f'@{hosted_domain}' not in email:
+        raise ValueError(f'Must be a {hosted_domain} domain.')
+    return email.split(f'@{hosted_domain}')[0]
 
 
 def get_current_user():

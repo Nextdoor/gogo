@@ -1,6 +1,6 @@
 import urllib
 
-from flask import request, render_template
+from flask import current_app, request, render_template
 from flask.views import View
 from sqlalchemy import asc, desc
 
@@ -100,6 +100,7 @@ class BaseListView(View):
             shortcuts = shortcuts[:-1]
 
         return {
+            'title': current_app.config['TITLE'],
             'offset': self.offset,
             'previous': self.get_previous_url(),
             'next': self.get_next_url(),

@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-REQUIRED_VARS="CONFIG DATABASE_HOST BASE_URL GOOGLE_CLIENT_ID HOSTED_DOMAIN"
+REQUIRED_VARS="CONFIG DATABASE_HOST BASE_URL GOOGLE_CLIENT_ID HOSTED_DOMAIN TITLE"
 
 EXIT=0
 for VAR in $REQUIRED_VARS; do
@@ -34,7 +34,11 @@ else
     exit 1
 fi
 
-sed -e "s/{client_secret.kms}/${client_secret}/g" \
+sed -e "s/{client_id}/${GOOGLE_CLIENT_ID}/g" \
+    -i /app/resources/client_secrets.json
+sed -e "s/{client_secret}/${client_secret}/g" \
+    -i /app/resources/client_secrets.json
+sed -e "s/{hosted_domain}/${HOSTED_DOMAIN}/g" \
     -i /app/resources/client_secrets.json
 
 export REDIRECT_URI=${BASE_URL}/oauth2/callback
