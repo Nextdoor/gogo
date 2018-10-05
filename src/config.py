@@ -5,9 +5,13 @@ class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URI']
-    REDIRECT_URI = os.environ['REDIRECT_URI']
-    HOSTED_DOMAIN = os.environ['HOSTED_DOMAIN']
     TITLE = os.environ['TITLE']
+
+    REDIRECT_URI = os.getenv('REDIRECT_URI')
+    HOSTED_DOMAIN = os.getenv('HOSTED_DOMAIN')
+    AUTH_HEADER_NAME = os.getenv('AUTH_HEADER_NAME')
+    USE_HEADER_AUTH = os.getenv('AUTH_HEADER_NAME') is not None
+    USE_GOOGLE_AUTH = os.getenv('AUTH_HEADER_NAME') is None
 
 
 class ProductionConfig(Config):

@@ -19,12 +19,16 @@ class RegexConverter(BaseConverter):
         super(RegexConverter, self).__init__(url_map)
         self.regex = items[0]
 
+
 app.url_map.converters['regex'] = RegexConverter
 
-app.secret_key = os.getenv('SESSION_SECRET_KEY')
+if app.config['USE_GOOGLE_AUTH']:
+    # If using Google Auth, the session cookie is the source of truth, so it should be encrypted.
+    app.secret_key = os.getenv('SESSION_SECRET_KEY')
+    # Register OAuth2 Callback URL for Google Auth.
+    app.add_url_rule('/oauth2/callback', view_func=auth.OAuth2Callback.as_view('oauth2_callback'))
 
 app.add_url_rule('/healthz', view_func=gogo.Healthz.as_view('healthz'))
-app.add_url_rule('/oauth2/callback', view_func=auth.OAuth2Callback.as_view('oauth2_callback'))
 
 app.add_url_rule('/', view_func=gogo.DashboardView.as_view('dashboard'))
 app.add_url_rule('/_list', view_func=gogo.ListView.as_view('list'))
