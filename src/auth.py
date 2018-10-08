@@ -19,6 +19,10 @@ def init_app(app):
         flow.user_agent = 'Go Link Shortener'
 
 
+class NoLoginSetupConfigured(Exception):
+    pass
+
+
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -37,6 +41,8 @@ def login_required(f):
                 return flask.redirect(flow.step1_get_authorize_url())
             if 'after_auth' in flask.session:
                 return flask.redirect(flask.session.pop('after_auth'))
+        else:
+            raise NoLoginSetupConfigured
         return f(*args, **kwargs)
 
     return decorated_function
