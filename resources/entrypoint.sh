@@ -28,6 +28,17 @@ print(client.decrypt(CiphertextBlob=binary_data)["Plaintext"].decode())
 if [[ -z "$AUTH_HEADER_NAME" ]]; then
     # Using Built-In Google OAuth.
     echo "AUTH_HEADER_NAME not set. Configuring Google OAuth."
+
+    if [[ -z "$GOOGLE_CLIENT_ID" ]]; then
+        echo "GOOGLE_CLIENT_ID must be set."
+        exit 1
+    fi
+
+    if [[ -z "$HOSTED_DOMAIN" ]]; then
+        echo "HOSTED_DOMAIN must be set."
+        exit 1
+    fi
+
     if [[ -n "$GOOGLE_CLIENT_SECRET" ]]; then
         client_secret=$GOOGLE_CLIENT_SECRET
     elif [[ -n "$GOOGLE_CLIENT_SECRET_KMS_BLOB" ]]; then
