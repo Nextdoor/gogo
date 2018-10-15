@@ -27,6 +27,7 @@ I recommend setting the venv built with `make venv` as the remote interpreter.
 `DATABASE_URI` - The full Postgres connection string, like `postgresql://<username>:<password>@<hostname>/<database>` 
 `BASE_URL` - The full qualified DNS name that the server will run on, like 'https://gogo.com/'. 
 `TITLE` - The title to display in the UI, like 'Nextdoor'. With that, it'd say `Go Nextdoor`.
+`BEHIND_PROXY` - If set to `true`, this will add middleware that will respect X-Forwarded-Proto and other proxy headers.
 
 OAuth: One of Built-In Google OAuth or Header-Based Auth must be used.
 

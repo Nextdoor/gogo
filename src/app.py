@@ -1,6 +1,7 @@
 import os
 
 from flask import g, Flask
+from werkzeug.contrib.fixers import ProxyFix
 from werkzeug.routing import BaseConverter
 
 import auth
@@ -12,6 +13,9 @@ app = Flask('gogo', template_folder='../templates')
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+if app.config['BEHIND_PROXY']:
+    app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
 class RegexConverter(BaseConverter):
