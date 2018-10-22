@@ -15,3 +15,13 @@ table {
     cursor: pointer;
     color: #005580;
 }
+
+.edit-form {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.delete-form {
+    margin-bottom: 0;
+    float: right;
+}

@@ -9,7 +9,7 @@ from models import db, Shortcut
 import auth
 
 # Shortcuts may not use these names.
-RESERVED_NAMES = {'_create', '_edit', '_list', '_ajax'}
+RESERVED_NAMES = {'_create', '_delete', '_edit', '_list', '_ajax'}
 
 
 class DashboardView(BaseListView):
@@ -63,6 +63,34 @@ class CreateShortcutView(MethodView):
         db.session.commit()
 
         return flask.redirect('/?created=%s' % name)
+
+
+class DeleteShortcutView(MethodView):
+    @auth.login_required
+    def get(self):
+        name = flask.request.args.get('name')
+        if name is None:
+            return '"name" param is required', 400
+        shortcut = Shortcut.query.filter(Shortcut.name == name).first()
+        if not shortcut:
+            return flask.redirect('/?error=%s+does+not+exist' % name)
+
+        template_values = {
+            'name': name,
+        }
+        return flask.render_template('delete.html', **template_values)
+
+    @auth.login_required
+    def post(self):
+        name = flask.request.form.get('name')
+        shortcut = Shortcut.query.filter(Shortcut.name == name).first()
+        if not shortcut:
+            return flask.redirect('/?error=%s+does+not+exist' % name)
+
+        db.session.delete(shortcut)
+        db.session.commit()
+
+        return flask.redirect('/?deleted=%s' % name)
 
 
 class EditShortcutView(MethodView):

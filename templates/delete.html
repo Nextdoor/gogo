@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{%- block title %}Delete Shortcut{% endblock %}
+{% block content %}
+    <div>
+        <span>Delete shortcut <strong>{{ name }}</strong></span>
+        <form class="well form-inline" id="shortcut-form" method="post">
+            <span>Are you sure you want to delete shortcut <strong>{{ name }}</strong>?</span>
+            <input type="hidden" id="name" name="name" value="{{ name }}"/>
+            <button type="submit" class="btn btn-danger btn-medium" id="delete-button">Delete</button>
+            <button class="btn btn-medium cancel-button">Cancel</button>
+        </form>
+    </div>
+{% endblock %}

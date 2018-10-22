@@ -37,6 +37,7 @@ app.add_url_rule('/healthz', view_func=gogo.Healthz.as_view('healthz'))
 app.add_url_rule('/', view_func=gogo.DashboardView.as_view('dashboard'))
 app.add_url_rule('/_list', view_func=gogo.ListView.as_view('list'))
 app.add_url_rule('/_create', view_func=gogo.CreateShortcutView.as_view('create_shortcut'))
+app.add_url_rule('/_delete', view_func=gogo.DeleteShortcutView.as_view('delete_shortcut'))
 app.add_url_rule('/_edit', view_func=gogo.EditShortcutView.as_view('edit_shortcut'))
 app.add_url_rule('/<regex(".+"):name>', view_func=gogo.ShortcutRedirectView.as_view('shortcut_redirect'))
 

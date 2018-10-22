@@ -25,7 +25,10 @@
       <td class="hide-overflow"><a href="{{ s.url  }}">{{ s.url }}</a></td>
       <td class="hide-overflow">{{ s.secondary_url if s.secondary_url != None else '' }}</td>
       <td class="hide-overflow">{{ s.hits }}</td>
-      <td><a href="_edit?name={{ s.name }}"><i class="icon-pencil"></i></a></td>
+      <td>
+          <a href="_edit?name={{ s.name }}"><i class="icon-pencil"></i></a>
+          <a href="_delete?name={{ s.name }}"><i class="icon-remove"></i></a>
+      </td>
     </tr>
     {%- endfor %}
   </table>

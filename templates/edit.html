@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 {%- block title %}Edit Shortcut{% endblock %}
 {% block content %}
-<div>
-<span>Edit shortcut <strong>{{ name }}</strong></span>
-<form class="well form-inline" method="post">
-  <input type="hidden" id="name" name="name" value="{{ name }}"/>
-  <label>URL</label>
-  <input class="input-xlarge" type="text" id="url" name="url" value="{{ url }}"/>
-  <input class="input-xlarge" type="text" id="secondary_url" name="secondary_url"
-         value="{{ secondary_url if secondary_url != None else '' }}" placeholder="option URL with %s in place"/>
-  <button type="submit" class="btn btn-primary btn-medium">Done</button>
-  <button class="btn btn-medium cancel-button">Cancel</button>
-</form>
-</div>
-<script>
-  $().ready(function() {
-    $('#url').focus();
-  });
-</script>
+    <div>
+        <span>Edit shortcut <strong>{{ name }}</strong></span>
+        <div class="well">
+            <form class="edit-form form-inline" method="post">
+                <input type="hidden" id="name" name="name" value="{{ name }}"/>
+                <label>URL</label>
+                <input class="input-xlarge" type="text" id="url" name="url" value="{{ url }}"/>
+                <input class="input-xlarge" type="text" id="secondary_url" name="secondary_url"
+                       value="{{ secondary_url if secondary_url != None else '' }}"
+                       placeholder="option URL with %s in place"/>
+                <button type="submit" class="btn btn-primary btn-medium">Done</button>
+                <button class="btn btn-medium cancel-button">Cancel</button>
+            </form>
+            <form class="delete-form form-inline" id="shortcut-form" method="get" action="/_delete">
+                <input type="hidden" id="name" name="name" value="{{ name }}"/>
+                <button type="submit" class="btn btn-danger btn-medium" id="delete-button">Delete</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        $().ready(function() {
+            $('#url').focus();
+        });
+    </script>
 {% endblock %}

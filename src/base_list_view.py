@@ -28,6 +28,7 @@ class BaseListView(View):
     def __init__(self):
         self.created = None
         self.edited = None
+        self.deleted = None
         self.to = None
         self.error = None
         self.sort = None
@@ -40,6 +41,7 @@ class BaseListView(View):
         # MESSAGING
         self.created = request.args.get('created')
         self.edited = request.args.get('edited')
+        self.deleted = request.args.get('deleted')
         self.to = request.args.get('to')
         self.error = request.args.get('error')
 
@@ -108,6 +110,7 @@ class BaseListView(View):
             'has_next': has_next,
             'created': self.created,
             'edited': self.edited,
+            'deleted': self.deleted,
             'to': self.to,
             'error': self.error,
         }
