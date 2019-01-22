@@ -20,11 +20,11 @@ pyasn1-modules==0.1.4
 pytest==3.2.3
 pytest-cov==2.5.1
 python-dateutil==2.6.1
-requests==2.18.4
+requests==2.21.0
 rsa==3.4.2
 s3transfer==0.1.11
 six==1.10.0
 SQLAlchemy==1.1.14
 uritemplate==3.0.0
-urllib3==1.22
+urllib3==1.24.1
 Werkzeug==0.14.1
