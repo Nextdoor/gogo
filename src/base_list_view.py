@@ -11,6 +11,7 @@ SORT_MAP = {
     'hits': 'hits',
     'name': 'name',
     'owner': 'owner',
+    'dateCreated': 'created_at',
     'url': 'url',
     'secondaryUrl': 'secondary_url'
 }
