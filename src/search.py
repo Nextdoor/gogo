@@ -9,6 +9,7 @@ import auth
 
 class SearchView(MethodView):
     DEFAULT_RESULT_LIMIT = 10
+    MAX_RESULT_LIMIT = 100
 
     @auth.login_required
     def get(self):
@@ -22,6 +23,8 @@ class SearchView(MethodView):
                 result_limit = DEFAULT_RESULT_LIMIT
             else:
                 result_limit = int(result_limit)
+                if result_limit > MAX_RESULT_LIMIT:
+                    result_limit = MAX_RESULT_LIMIT
 
             query = Shortcut.query
 
