@@ -8,6 +8,14 @@ If a go link does not exist, it will prompt you to create that link.
 ## Design
 Built with Flask, Python 3.6, with Postgres and Google OAuth.
 
+## Endpoints
+- The `go/` endpoint will bring you to your personal dashboard. At the top will be the section that you can use to create your own Go links. Below that is a list of all the Go links that you've created before. Below that is a link to all Go links that your organization has created so far, in alphabetical order.
+- The `go/_list` endpoint will give you a list of all Go links in your organization. You can add the parameter `?limit={num}` in order to contract or expand that list to a certain number of entries, even into the thousands. You can use `sort=hits` in order to sort on hit count instead of alphabetically. And use `order=desc` in that case, in order to view the links with the most hits first.
+- The `go/_create` endpoint will prompt you to create a new Go link, asking you to give the name and URL that you want to shortlink to. If you try to hit `go/{shortname_not_used_yet}`, you will be redirected to the creation page, with the name field already filled in, meaning that you only have to provide the URL.
+- The `go/_delete` endpoint requires the `?name={shortname}` arg. This will prompt you to delete the Go link with that name.
+- The `go/_edit` endpoint requires the `?name={shortname}` arg as well, and will prompt you to edit the Go link.
+- The `go/_ajax/search` endpoint requires either the `name` or `url` arg. If `name` is provided, the search results returned will be the ones that match closest to the name provided, as decided by the Postgres `LIKE` functionality. For the `url` field, all shortnames that map to that URL will be returned. This link is useful for seeing if someone else already created a shortname for the URL that you want to link to, so that you can adopt that shortname instead of introducing another one of your own. This endpoint currently returns the JSON of the search results.
+
 ## Local development
 Uses docker.
 
