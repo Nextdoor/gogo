@@ -8,15 +8,20 @@ import auth
 
 
 class SearchView(MethodView):
-    RESULT_LIMIT = 10
+    DEFAULT_RESULT_LIMIT = 10
 
     @auth.login_required
     def get(self):
         try:
             name = flask.request.args.get('name')
             url = flask.request.args.get('url')
+            result_limit = flask.request.args.get('limit')
             if name is None and url is None:
                 raise ValueError('One of params "name", "url" is required.')
+            if result_limit is None:
+                result_limit = DEFAULT_RESULT_LIMIT
+            else:
+                result_limit = int(result_limit)
 
             query = Shortcut.query
 
@@ -32,7 +37,7 @@ class SearchView(MethodView):
             elif url is not None:
                 query = query.filter(url_like_filter)
 
-            results = query.limit(self.RESULT_LIMIT).all()
+            results = query.limit(result_limit).all()
             results = [
                 {
                     'name': result.name,
