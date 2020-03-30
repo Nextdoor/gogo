@@ -16,10 +16,10 @@ class SearchView(MethodView):
         try:
             name = flask.request.args.get('name')
             url = flask.request.args.get('url')
-            result_limit = int(flask.request.args.get('limit', DEFAULT_RESULT_LIMIT))
+            result_limit = int(flask.request.args.get('limit', self.DEFAULT_RESULT_LIMIT))
             if name is None and url is None:
                 raise ValueError('One of params "name", "url" is required.')
-            result_limit = min(result_limit, MAX_RESULT_LIMIT)
+            result_limit = min(result_limit, self.MAX_RESULT_LIMIT)
 
             query = Shortcut.query
 
