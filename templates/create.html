@@ -7,11 +7,11 @@
 </div>
 <script>
   $().ready(function() {
-    addAlert('Shortcut <strong>{{ name }}</strong> does not exist, but you can create it now!',
+    addAlert('Also, check if anyone added a link that already redirects to the same URL you have in mind: https://go.corp.nextdoor.com/_ajax/search?url={your_url}',
              'alert-info');
     addAlert('Before you do, be sure to use the search feature to see if anyone added a go link under a similar name: https://go.corp.nextdoor.com/_ajax/search?name={your_name}',
              'alert-info');
-    addAlert('Also, check if anyone added a link that already redirects to the same URL you have in mind: https://go.corp.nextdoor.com/_ajax/search?url={your_url}',
+    addAlert('Shortcut <strong>{{ name }}</strong> does not exist, but you can create it now!',
              'alert-info');
     $('#url').focus();
   });
