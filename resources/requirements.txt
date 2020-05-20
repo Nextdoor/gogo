@@ -7,7 +7,7 @@ docutils==0.14
 Flask==1.0
 Flask-SQLAlchemy==2.2
 google-api-python-client==1.6.3
-httplib2==0.10.3
+httplib2==0.18.0
 idna==2.6
 itsdangerous==0.24
 Jinja2==2.9.6
