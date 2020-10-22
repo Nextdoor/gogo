@@ -1,3 +1,5 @@
+include Docker.mk
+
 SHELL=/bin/bash
 SHA1 := $(shell git rev-parse --short HEAD)
 
@@ -23,13 +25,7 @@ define DOCKER_RUN_ARGS
 -it
 endef
 
-.PHONY: all build run stop login populate-cache tag push test venv
-
-all: build run
-
-build:
-	@echo "Building gogo docker image."
-	@docker build $(DOCKER_BUILD_ARGS) .
+.PHONY: run stop test venv
 
 run: stop
 	@touch envfile
@@ -38,23 +34,6 @@ run: stop
 
 stop:
 	@docker rm -f $(DOCKER_IMAGE) > /dev/null 2>&1 || true
-
-login:
-	@echo "Logging into $(DOCKER_REGISTRY)"
-	@docker login \
-		-u $(DOCKER_USER) \
-		-p "$(value DOCKER_PASS)" $(DOCKER_REGISTRY)
-
-populate-cache:
-	@echo "Attempting to download $(DOCKER_IMAGE)"
-	@docker pull "$(DOCKER_IMAGE)" && \
-		docker images -a || true
-
-tag:
-	@docker tag $(DOCKER_IMAGE) $(DOCKER_IMAGE):$(DOCKER_TAG)
-
-push: tag
-	@docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
 
 test: stop
 	@touch envfile
