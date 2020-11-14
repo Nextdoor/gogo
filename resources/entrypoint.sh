@@ -39,6 +39,13 @@ if [[ -z "$AUTH_HEADER_NAME" ]]; then
         exit 1
     fi
 
+    if [[ -n "$DATABASE_URI_KMS" ]]; then
+        export DATABASE_URI=$(kms_decrypt $DATABASE_URI_KMS)
+    else
+        echo "DATABASE_URI_KMS must be set."
+        exit 1
+    fi
+
     if [[ -n "$GOOGLE_CLIENT_SECRET" ]]; then
         client_secret=$GOOGLE_CLIENT_SECRET
     elif [[ -n "$GOOGLE_CLIENT_SECRET_KMS_BLOB" ]]; then
