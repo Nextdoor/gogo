@@ -16,7 +16,7 @@ define DOCKER_RUN_ARGS
 --name $(DOCKER_IMAGE) \
 --publish 80:80 \
 --env CONFIG=DevelopmentConfig \
---env DATABASE_URI=postgresql://gogo:gogo@gogo-postgres/gogo \
+--env DATABASE_URI_KMS=$(DATABASE_URI_KMS) \
 --env BASE_URL=http://localhost \
 --env-file envfile \
 --hostname gogo-dev \
@@ -55,7 +55,7 @@ PGDB=gogo
 PGHOST=localhost
 PGPORT=5432
 PGUSER=gogo
-PGPASS=gogo
+PGPASS=changeme # for dev only. Prod password is encrypted in KMS via DATABASE_URI_KMS
 PGDATA=/var/lib/postgresql/data/gogo
 
 define PG_ARGS
