@@ -4,7 +4,6 @@ import os
 class Config(object):
     DEBUG = False
     CSRF_ENABLED = True
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URI']
     TITLE = os.environ['TITLE']
 
     REDIRECT_URI = os.getenv('REDIRECT_URI')
