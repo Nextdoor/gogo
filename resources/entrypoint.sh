@@ -25,6 +25,13 @@ print(client.decrypt(CiphertextBlob=binary_data)["Plaintext"].decode())
 ' $1
 }
 
+if [[ -n "$DATABASE_URI_KMS" ]]; then
+    export DATABASE_URI=$(kms_decrypt $DATABASE_URI_KMS)
+else
+    echo "DATABASE_URI_KMS must be set."
+    exit 1
+fi
+
 if [[ -z "$AUTH_HEADER_NAME" ]]; then
     # Using Built-In Google OAuth.
     echo "AUTH_HEADER_NAME not set. Configuring Google OAuth."
@@ -36,13 +43,6 @@ if [[ -z "$AUTH_HEADER_NAME" ]]; then
 
     if [[ -z "$HOSTED_DOMAIN" ]]; then
         echo "HOSTED_DOMAIN must be set."
-        exit 1
-    fi
-
-    if [[ -n "$DATABASE_URI_KMS" ]]; then
-        export DATABASE_URI=$(kms_decrypt $DATABASE_URI_KMS)
-    else
-        echo "DATABASE_URI_KMS must be set."
         exit 1
     fi
 
