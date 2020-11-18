@@ -14,6 +14,8 @@ app = Flask('gogo', template_folder='../templates')
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
+
 if app.config['BEHIND_PROXY']:
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
