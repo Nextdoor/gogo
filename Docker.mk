@@ -58,7 +58,7 @@ endif
 # Docker Build Flags
 DOCKER             ?= $(shell which docker)
 DOCKERFILE         ?= .
-DOCKER_IMAGE       := $(REPO_NAME)
+DOCKER_IMAGE       := gogo
 DOCKER_NAME        ?= $(ECR_NAMESPACE)/$(DOCKER_IMAGE):$(DOCKER_TAG)
 DOCKER_FQDN        ?= $(ECR_REGISTRY)/$(DOCKER_NAME)
 
