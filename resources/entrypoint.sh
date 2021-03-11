@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-REQUIRED_VARS="CONFIG DATABASE_URI_KMS BASE_URL TITLE"
+REQUIRED_VARS="CONFIG BASE_URL TITLE"
 
 EXIT=0
 for VAR in $REQUIRED_VARS; do
@@ -27,8 +27,10 @@ print(client.decrypt(CiphertextBlob=binary_data)["Plaintext"].decode())
 
 if [[ -n "$DATABASE_URI_KMS" ]]; then
     export DATABASE_URI=$(kms_decrypt $DATABASE_URI_KMS)
+elif [[ -n "$DATABASE_URI" ]]; then
+    export DATABASE_URI
 else
-    echo "DATABASE_URI_KMS must be set."
+    echo "DATABASE_URI_KMS/DATABASE_URI must be set."
     exit 1
 fi
 

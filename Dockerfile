@@ -7,7 +7,7 @@ EXPOSE 80 443
 ENTRYPOINT ["/app/resources/entrypoint.sh"]
 
 RUN apt-get update && \
-    apt-get install -y nginx && \
+    apt-get install -y nginx jq && \
     apt-get autoclean && \
     rm -rf /var/lib/apt/cache
 
