@@ -17,6 +17,6 @@ jobs:
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: nextdoor/gogo/gogo
+          registry: ghcr.io
+          repository: nextdoor/gogo
           tag_with_ref: true
