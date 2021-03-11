@@ -1,0 +1,16 @@
+name: Build Docker image
+on: [push, pull_request]
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          push: false
+          registry: docker.pkg.github.com
+          repository: nextdoor/gogo/gogo
+          tag_with_ref: true
