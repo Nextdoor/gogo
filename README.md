@@ -33,13 +33,14 @@ I recommend setting the venv built with `make venv` as the remote interpreter.
 ## Environment Variables
 `CONFIG` - The configuration to use, like `DevelopmentConfig` or `ProductionConfig`.
 `DATABASE_URI` - The full Postgres connection string, like `postgresql://<username>:<password>@<hostname>/<database>` 
-`BASE_URL` - The full qualified DNS name that the server will run on, like 'https://gogo.com/'. 
 `TITLE` - The title to display in the UI, like 'Nextdoor'. With that, it'd say `Go Nextdoor`.
 `BEHIND_PROXY` - If set to `true`, this will add middleware that will respect X-Forwarded-Proto and other proxy headers.
+`DISABLE_NGINX` - If set to anything, then Nginx will not be started up (useful if you have your own sidecar reverse proxy)
 
 OAuth: One of Built-In Google OAuth or Header-Based Auth must be used.
 
 ### If using Built-In Google OAuth:
+`BASE_URL` - The full qualified DNS name that the server will run on, like 'https://gogo.com/'. 
 `GOOGLE_CLIENT_ID` - Your Google App ID.
 `GOOGLE_CLIENT_SECRET` - Your Google Client Secret.
 `GOOGLE_CLIENT_SECRET_KMS_BLOB` - Alternative to `GOOGLE_CLIENT_SECRET` - KMS Encrypted Google Client Secret.
