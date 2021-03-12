@@ -2,9 +2,10 @@
 
 set -e
 
-CONFIG=${CONFIG:-ProductionConfig}
-TITLE=${TITLE:-GoGo}
-DISABLE_NGINX=${DISABLE_NGINX:-}
+export CONFIG=${CONFIG:-ProductionConfig}
+export TITLE=${TITLE:-GoGo}
+export DISABLE_NGINX=${DISABLE_NGINX:-}
+export SKIP_AUTH=${SKIP_AUTH:-false}
 
 kms_decrypt() {
     python -c 'import sys
@@ -28,7 +29,7 @@ if [ -z "${DATABASE_URI}" ]; then
   exit 1
 fi
 
-if [[ -z "$AUTH_HEADER_NAME" ]]; then
+if [ -z "$AUTH_HEADER_NAME" ] && [ "$SKIP_AUTH" == "false" ]; then
     # Using Built-In Google OAuth.
     echo "AUTH_HEADER_NAME not set. Configuring Google OAuth."
 

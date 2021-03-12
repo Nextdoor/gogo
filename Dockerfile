@@ -3,9 +3,6 @@ FROM python:3.6.5-stretch
 # Env var to force update of the image. Increment for each time this is needed
 ENV CACHE_BUSTER_VAR=1
 
-EXPOSE 80 443
-ENTRYPOINT ["/app/resources/entrypoint.sh"]
-
 RUN apt-get update && \
     apt-get install -y nginx jq && \
     apt-get autoclean && \
@@ -26,3 +23,6 @@ ADD resources /app/resources/
 ADD static /app/static/
 ADD templates /app/templates/
 ADD src /app/src/
+
+EXPOSE 80 443 5000
+ENTRYPOINT ["/app/resources/entrypoint.sh"]

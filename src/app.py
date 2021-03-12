@@ -9,7 +9,8 @@ import gogo
 import search
 from models import db
 
-app = Flask('gogo', template_folder='../templates')
+app = Flask('gogo', template_folder='../templates', static_url_path='/static',
+            static_folder='../static')
 
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -44,6 +45,8 @@ app.add_url_rule('/_edit', view_func=gogo.EditShortcutView.as_view('edit_shortcu
 app.add_url_rule('/<regex(".+"):name>', view_func=gogo.ShortcutRedirectView.as_view('shortcut_redirect'))
 
 app.add_url_rule('/_ajax/search', view_func=search.SearchView.as_view('search'))
+
+
 db.init_app(app)
 
 if __name__ == '__main__':
