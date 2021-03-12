@@ -1,17 +1,8 @@
 #!/bin/bash -e
 
-REQUIRED_VARS="CONFIG BASE_URL TITLE"
-
-EXIT=0
-for VAR in $REQUIRED_VARS; do
-    if [[ -z "$(eval echo "\$${VAR}")" ]]; then
-        EXIT=1
-        echo "Missing $VAR." >&2
-    fi
-done
-if [[ "$EXIT" -eq 1 ]]; then
-    exit 1
-fi
+CONFIG=${CONFIG:-ProductionConfig}
+TITLE=${TITLE:-GoGo}
+DISABLE_NGINX=${DISABLE_NGINX:-}
 
 kms_decrypt() {
     python -c 'import sys
@@ -79,10 +70,7 @@ if [[ -z "$AUTH_HEADER_NAME" ]]; then
     fi
 fi
 
-sed -e "s#{base_url}#${BASE_URL}#g" \
-    -i /app/resources/nginx.conf
-
-/usr/sbin/nginx -c /app/resources/nginx.conf -p /app/ &
+test -z "${DISABLE_NGINX}" && /usr/sbin/nginx -c /app/resources/nginx.conf -p /app/ &
 
 export APP_SETTINGS="config.${CONFIG}"
 
