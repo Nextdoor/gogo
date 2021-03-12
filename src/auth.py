@@ -26,7 +26,9 @@ class NoLoginSetupConfigured(Exception):
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if flask.current_app.config['USE_HEADER_AUTH']:
+        if flask.current_app.config['SKIP_AUTH']:
+            return f(*args, **kwargs)
+        elif flask.current_app.config['USE_HEADER_AUTH']:
             # Header login flow.
             current_user = get_current_user_from_header()
             if current_user is None:
