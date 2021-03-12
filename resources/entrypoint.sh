@@ -23,7 +23,7 @@ if [ -n "$DATABASE_URI_KMS" ]; then
   export DATABASE_URI
 fi
 
-if [ -n "${DATABASE_URI}" ]; then
+if [ -z "${DATABASE_URI}" ]; then
   echo "DATABASE_URI_KMS/DATABASE_URI must be set."
   exit 1
 fi
@@ -46,7 +46,7 @@ if [[ -z "$AUTH_HEADER_NAME" ]]; then
       GOOGLE_CLIENT_SECRET=$(kms_decrypt "$GOOGLE_CLIENT_SECRET_KMS_BLOB")
     fi
 
-    if [ -n "$GOOGLE_CLIENT_SECRET" ]; then
+    if [ -z "$GOOGLE_CLIENT_SECRET" ]; then
         echo "Either GOOGLE_CLIENT_SECRET or GOOGLE_CLIENT_SECRET_KMS_BLOB must be set."
         exit 1
     fi
@@ -66,7 +66,7 @@ if [[ -z "$AUTH_HEADER_NAME" ]]; then
     fi
     export SESSION_SECRET_KEY
 
-    if [ -n "$SESSION_SECRET_KEY" ]; then
+    if [ -z "$SESSION_SECRET_KEY" ]; then
       echo "Either SESSION_SECRET_KEY or SESSION_SECRET_KEY_KMS_BLOB must be set."
       exit 1
     fi
