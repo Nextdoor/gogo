@@ -10,6 +10,7 @@ import auth
 
 # Shortcuts may not use these names.
 RESERVED_NAMES = {'_create', '_delete', '_edit', '_list', '_ajax'}
+HTTPS_REDIRECT_URL = flask.current_app.config['HTTPS_REDIRECT_URL']
 
 
 class DashboardView(BaseListView):
@@ -49,10 +50,10 @@ class CreateShortcutView(MethodView):
         if not name or not url:
             return '"name" and "url" params required', 400
         if name in RESERVED_NAMES:
-            return flask.redirect('/?error=%s+is+reserved' % name)
+            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+is+reserved')
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if shortcut:
-            return flask.redirect('/?error=%s+already+exists' % name)
+            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+already+exists')
 
         shortcut = Shortcut(name=name,
                             url=url,
@@ -62,7 +63,7 @@ class CreateShortcutView(MethodView):
         db.session.add(shortcut)
         db.session.commit()
 
-        return flask.redirect('/?created=%s' % name)
+        return flask.redirect(f'{HTTPS_REDIRECT_URL}/?created={name}')
 
 
 class DeleteShortcutView(MethodView):
@@ -73,7 +74,7 @@ class DeleteShortcutView(MethodView):
             return '"name" param is required', 400
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if not shortcut:
-            return flask.redirect('/?error=%s+does+not+exist' % name)
+            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist')
 
         template_values = {
             'name': name,
@@ -85,12 +86,12 @@ class DeleteShortcutView(MethodView):
         name = flask.request.form.get('name')
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if not shortcut:
-            return flask.redirect('/?error=%s+does+not+exist' % name)
+            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist')
 
         db.session.delete(shortcut)
         db.session.commit()
 
-        return flask.redirect('/?deleted=%s' % name)
+        return flask.redirect(f'{HTTPS_REDIRECT_URL}/?deleted={name}')
 
 
 class EditShortcutView(MethodView):
@@ -101,7 +102,7 @@ class EditShortcutView(MethodView):
             return '"name" param is required', 400
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if not shortcut:
-            return flask.redirect('/?error=%s+does+not+exist' % name)
+            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist')
 
         template_values = {
             'name': name,
@@ -119,7 +120,7 @@ class EditShortcutView(MethodView):
             return '"name" and "url" params required', 400
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if not shortcut:
-            return flask.redirect('/?error=%s+does+not+exist' % name)
+            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist')
 
         shortcut.url = url
         shortcut.secondary_url = secondary_url
@@ -131,7 +132,7 @@ class EditShortcutView(MethodView):
         db.session.add(shortcut)
         db.session.commit()
 
-        return flask.redirect('/?edited=%s' % name)
+        return flask.redirect(f'{HTTPS_REDIRECT_URL}/?edited={name}')
 
 
 class ShortcutRedirectView(MethodView):

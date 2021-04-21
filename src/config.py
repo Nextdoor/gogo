@@ -13,6 +13,7 @@ class Config(object):
     USE_GOOGLE_AUTH = os.getenv('AUTH_HEADER_NAME') is None
     SKIP_AUTH = os.getenv('SKIP_AUTH').lower() in ['1', 'true', 't']
     BEHIND_PROXY = os.getenv('BEHIND_PROXY', '0').lower() in ['1', 'true', 't']
+    HTTPS_REDIRECT_URL = os.getenv('HTTPS_REDIRECT_URL', 'https://localhost:8443')
 
 
 class ProductionConfig(Config):
