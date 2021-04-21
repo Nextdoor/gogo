@@ -1,4 +1,5 @@
 """URL shortcut generator."""
+import os
 
 import flask
 from flask.views import MethodView
@@ -10,7 +11,7 @@ import auth
 
 # Shortcuts may not use these names.
 RESERVED_NAMES = {'_create', '_delete', '_edit', '_list', '_ajax'}
-HTTPS_REDIRECT_URL = flask.current_app.config['HTTPS_REDIRECT_URL']
+HTTPS_REDIRECT_URL = os.getenv('HTTPS_REDIRECT_URL', 'https://localhost:8443')
 
 
 class DashboardView(BaseListView):
