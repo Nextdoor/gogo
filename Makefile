@@ -1,5 +1,3 @@
-include Docker.mk
-
 SHELL=/bin/bash
 SHA1 := $(shell git rev-parse --short HEAD)
 
