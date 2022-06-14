@@ -25,7 +25,7 @@ Built with Flask, Python 3.6, with Postgres and Google OAuth.
 
 Uses docker.
 
-Run `make postgres` and `make psql-populate` to initialize the database first.
+Run `make db` to initialize the database first.
 
 OAuth is required. Secrets can be provided either by direct environment variables or by KMS blobs in environment variables. If using KMS, you'll need to be authenticated to AWS to decrypt the  blobs. `~/.aws` is volume mounted.
 

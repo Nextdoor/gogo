@@ -1,7 +1,7 @@
-FROM python:3.6.5-stretch
+FROM python:3.10
 
 # Env var to force update of the image. Increment for each time this is needed
-ENV CACHE_BUSTER_VAR=1
+ENV CACHE_BUSTER_VAR=2022-06-14
 
 RUN apt-get update && \
     apt-get install -y nginx jq && \
