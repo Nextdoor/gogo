@@ -4,7 +4,7 @@ db = SQLAlchemy()
 
 
 class Shortcut(db.Model):
-    __tablename__ = 'shortcut'
+    __tablename__ = "shortcut"
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now(), nullable=False)
@@ -22,4 +22,4 @@ class Shortcut(db.Model):
         self.hits = hits
 
     def __repr__(self):
-        return '<id {}>'.format(self.id)
+        return "<id {}>".format(self.id)

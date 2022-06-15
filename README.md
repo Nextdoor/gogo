@@ -25,7 +25,7 @@ Built with Flask, Python 3.6, with Postgres and Google OAuth.
 
 Uses docker.
 
-Run `make postgres` and `make psql-populate` to initialize the database first.
+Run `make db` to initialize the database first.
 
 OAuth is required. Secrets can be provided either by direct environment variables or by KMS blobs in environment variables. If using KMS, you'll need to be authenticated to AWS to decrypt the  blobs. `~/.aws` is volume mounted.
 
@@ -57,10 +57,10 @@ OAuth: One of Built-In Google OAuth or Header-Based Auth must be used.
 | `GOOGLE_CLIENT_ID` | Your Google App ID. |
 | `GOOGLE_CLIENT_SECRET` | Your Google Client Secret. |
 | `GOOGLE_CLIENT_SECRET_KMS_BLOB` | Alternative to `GOOGLE_CLIENT_SECRET` - KMS Encrypted Google Client Secret. |
-| `AWS_DEFAULT_REGION` | Will be used to determine the AWS region in which to decrypt `*_KMS_BLOB` secrets. |
 | `HOSTED_DOMAIN` | The email domain to use for Google accounts, like 'nextdoor.com'. |
 | `SESSION_SECRET_KEY` | The secret key to encrypt the session cookie with. |
 | `SESSION_SECRET_KEY_KMS_BLOB` | Alternative to `SESSION_SECRET_KEY` - KMS Encrypted Secret Key. |
+| `AWS_DEFAULT_REGION` | Will be used to determine the AWS region in which to decrypt `*_KMS_BLOB` secrets. |
 
 ### If using Header-Based Auth:
 
