@@ -4,124 +4,123 @@ import os
 import flask
 from flask.views import MethodView
 
-from base_list_view import BaseListView
-from models import db, Shortcut
-
 import auth
+from base_list_view import BaseListView
+from models import Shortcut, db
 
 # Shortcuts may not use these names.
-RESERVED_NAMES = {'_create', '_delete', '_edit', '_list', '_ajax'}
-HTTPS_REDIRECT_URL = os.getenv('HTTPS_REDIRECT_URL', 'https://localhost:8443')
+RESERVED_NAMES = {"_create", "_delete", "_edit", "_list", "_ajax"}
+HTTPS_REDIRECT_URL = os.getenv("HTTPS_REDIRECT_URL", "https://localhost:8443")
 
 
 class DashboardView(BaseListView):
-    template = 'dashboard.html'
+    template = "dashboard.html"
 
     def get_shortcuts(self):
         return (
-            Shortcut.query
-                .filter(Shortcut.owner == auth.get_current_user())
-                .order_by(self.get_order_by())
-                .offset(self.offset)
-                .limit(self.limit)
-                .all()
+            Shortcut.query.filter(Shortcut.owner == auth.get_current_user())
+            .order_by(self.get_order_by())
+            .offset(self.offset)
+            .limit(self.limit)
+            .all()
         )
 
 
 class ListView(BaseListView):
-    template = 'list.html'
+    template = "list.html"
 
     def get_shortcuts(self):
         return (
-            Shortcut.query
-                .filter()
-                .order_by(self.get_order_by())
-                .offset(self.offset)
-                .limit(self.limit)
-                .all()
+            Shortcut.query.filter()
+            .order_by(self.get_order_by())
+            .offset(self.offset)
+            .limit(self.limit)
+            .all()
         )
 
 
 class CreateShortcutView(MethodView):
     @auth.login_required
     def post(self):
-        name = flask.request.form.get('name')
-        url = flask.request.form.get('url')
-        secondary_url = flask.request.form.get('secondary_url')
+        name = flask.request.form.get("name")
+        url = flask.request.form.get("url")
+        secondary_url = flask.request.form.get("secondary_url")
         if not name or not url:
             return '"name" and "url" params required', 400
         if name in RESERVED_NAMES:
-            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+is+reserved')
+            return flask.redirect(f"{HTTPS_REDIRECT_URL}/?error={name}+is+reserved")
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if shortcut:
-            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+already+exists')
+            return flask.redirect(f"{HTTPS_REDIRECT_URL}/?error={name}+already+exists")
 
-        shortcut = Shortcut(name=name,
-                            url=url,
-                            secondary_url=secondary_url,
-                            owner=auth.get_current_user(),
-                            hits=0)
+        shortcut = Shortcut(
+            name=name,
+            url=url,
+            secondary_url=secondary_url,
+            owner=auth.get_current_user(),
+            hits=0,
+        )
         db.session.add(shortcut)
         db.session.commit()
 
-        return flask.redirect(f'{HTTPS_REDIRECT_URL}/?created={name}')
+        return flask.redirect(f"{HTTPS_REDIRECT_URL}/?created={name}")
 
 
 class DeleteShortcutView(MethodView):
     @auth.login_required
     def get(self):
-        name = flask.request.args.get('name')
+        name = flask.request.args.get("name")
         if name is None:
             return '"name" param is required', 400
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if not shortcut:
-            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist')
+            return flask.redirect(f"{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist")
 
         template_values = {
-            'name': name,
+            "name": name,
         }
-        return flask.render_template('delete.html', **template_values)
+        return flask.render_template("delete.html", **template_values)
 
     @auth.login_required
     def post(self):
-        name = flask.request.form.get('name')
+        name = flask.request.form.get("name")
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if not shortcut:
-            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist')
+            return flask.redirect(f"{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist")
 
         db.session.delete(shortcut)
         db.session.commit()
 
-        return flask.redirect(f'{HTTPS_REDIRECT_URL}/?deleted={name}')
+        return flask.redirect(f"{HTTPS_REDIRECT_URL}/?deleted={name}")
 
 
 class EditShortcutView(MethodView):
     @auth.login_required
     def get(self):
-        name = flask.request.args.get('name')
+        name = flask.request.args.get("name")
         if name is None:
             return '"name" param is required', 400
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if not shortcut:
-            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist')
+            return flask.redirect(f"{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist")
 
         template_values = {
-            'name': name,
-            'url': shortcut.url,
-            'secondary_url': shortcut.secondary_url,
+            "name": name,
+            "url": shortcut.url,
+            "secondary_url": shortcut.secondary_url,
         }
-        return flask.render_template('edit.html', **template_values)
+        return flask.render_template("edit.html", **template_values)
 
     @auth.login_required
     def post(self):
-        name = flask.request.form.get('name')
-        url = flask.request.form.get('url')
-        secondary_url = flask.request.form.get('secondary_url')
+        name = flask.request.form.get("name")
+        url = flask.request.form.get("url")
+        secondary_url = flask.request.form.get("secondary_url")
         if name is None or url is None:
             return '"name" and "url" params required', 400
         shortcut = Shortcut.query.filter(Shortcut.name == name).first()
         if not shortcut:
-            return flask.redirect(f'{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist')
+            return flask.redirect(f"{HTTPS_REDIRECT_URL}/?error={name}+does+not+exist")
 
         shortcut.url = url
         shortcut.secondary_url = secondary_url
@@ -133,15 +132,15 @@ class EditShortcutView(MethodView):
         db.session.add(shortcut)
         db.session.commit()
 
-        return flask.redirect(f'{HTTPS_REDIRECT_URL}/?edited={name}')
+        return flask.redirect(f"{HTTPS_REDIRECT_URL}/?edited={name}")
 
 
 class ShortcutRedirectView(MethodView):
     @auth.login_required
     def get(self, name):
         secondary_arg = None
-        if '/' in name:
-            name, secondary_arg = name.split('/', 1)
+        if "/" in name:
+            name, secondary_arg = name.split("/", 1)
 
         if name in RESERVED_NAMES:
             flask.abort(404)
@@ -154,26 +153,34 @@ class ShortcutRedirectView(MethodView):
             shortcut.hits += 1
             db.session.add(shortcut)
             db.session.commit()
-            if secondary_arg and shortcut.secondary_url and '%s' in shortcut.secondary_url:
+            if (
+                secondary_arg
+                and shortcut.secondary_url
+                and "%s" in shortcut.secondary_url
+            ):
                 response = flask.make_response(
-                    flask.redirect(str(shortcut.secondary_url).replace('%s', secondary_arg)))
+                    flask.redirect(
+                        str(shortcut.secondary_url).replace("%s", secondary_arg)
+                    )
+                )
             else:
                 response = flask.make_response(
-                    flask.redirect(str(shortcut.url), code=301))
-            response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+                    flask.redirect(str(shortcut.url), code=301)
+                )
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
             return response
 
         template_values = {
-            'name': name,
+            "name": name,
         }
-        return flask.render_template('create.html', **template_values)
+        return flask.render_template("create.html", **template_values)
 
 
 class Healthz(MethodView):
     def get(self):
         try:
-            db.engine.execute('SELECT 1')
-            return 'OK'
+            db.engine.execute("SELECT 1")
+            return "OK"
         except Exception as e:
-            print('Healthz failed: %s' % e)
-            return 'Fail', 500
+            print("Healthz failed: %s" % e)
+            return "Fail", 500

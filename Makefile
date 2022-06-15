@@ -1,4 +1,3 @@
-SHELL=/bin/bash
 SHA1 := $(shell git rev-parse --short HEAD)
 
 DOCKER_IMAGE ?= gogo
@@ -42,9 +41,9 @@ test: stop
 
 venv:
 	@echo "Creating and updating venv."
-	@python3.6 -m venv .venv
+	@python3 -m venv .venv
 	@if [ "$$(cat resources/requirements.txt | sort)" != "$$(.venv/bin/pip freeze)" ]; then \
-		.venv/bin/pip install -r resources/requirements.txt; \
+		.venv/bin/pip install -Ur resources/requirements.txt; \
 	fi
 
 # Database.
