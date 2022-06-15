@@ -56,7 +56,7 @@ PG_DB=gogo
 PG_HOST=localhost
 PG_PORT=5432
 PG_USER=gogo
-PG_PASS=gogo # for dev only. Prod password is encrypted in KMS via DATABASE_URI_KMS
+PG_PASS=gogo # for dev only. Prod password is encrypted in KMS via DATABASE_URI_KMS_BLOB
 PG_DATA=/var/lib/postgresql/data/gogo
 
 
@@ -71,7 +71,6 @@ db:
 		--env POSTGRES_DB=$(PG_DB) \
 		--env PG_DATA=$(PG_DATA) \
 		--detach \
-		--volume $(HOME)/data/gogo:$(PG_DATA) \
 		$(PG_DOCKER_IMAGE):$(PG_DOCKER_TAG) > /dev/null
 
 	@echo "Waiting for Postgres to be ready."

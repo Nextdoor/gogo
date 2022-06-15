@@ -16,11 +16,9 @@ app = Flask(
     static_folder="../static",
 )
 
-app.config.from_object(os.environ["APP_SETTINGS"])
+app.config.from_object(os.getenv("APP_SETTINGS", "config.ProductionConfig"))
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URI"]
-
 if app.config["BEHIND_PROXY"]:
     app.wsgi_app = ProxyFix(app.wsgi_app)
 
