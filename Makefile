@@ -1,12 +1,12 @@
 
-ROOT_DIR       := $(shell git rev-parse --show-toplevel)
-VENV_CMD       := python3 -m venv
-VENV_DIR       := $(ROOT_DIR)/.venv
-VENV_BIN       := $(VENV_DIR)/bin
+ROOT_DIR   := $(shell git rev-parse --show-toplevel)
+VENV_CMD   := python3 -m venv
+VENV_DIR   := $(ROOT_DIR)/.venv
+VENV_BIN   := $(VENV_DIR)/bin
 
 # Docker Build Flags
-DOCKER               ?= $(shell which docker)
-DOCKERFILE           ?= .
+DOCKER     ?= $(shell which docker)
+DOCKERFILE ?= .
 
 # gogo Application
 GOGO_DOCKER_IMAGE          ?= gogo
@@ -31,6 +31,7 @@ PG_USER                  := gogo
 PG_PASS                  := gogo
 PG_DB                    := gogo
 PG_DATA                  := /var/lib/postgresql/data/gogo
+PG_DATA_LOCAL            ?= $(HOME)/data/gogo
 
 # GoGo Application
 .PHONY: docker_build
@@ -69,7 +70,7 @@ db:
 		--env POSTGRES_PASSWORD=$(PG_PASS) \
 		--env POSTGRES_DB=$(PG_DB) \
 		--env PGDATA=$(PG_DATA) \
-		--volume $(HOME)/data/gogo:$(PG_DATA) \
+		--volume $(PG_DATA_LOCAL):$(PG_DATA) \
 		--detach $(PG_DOCKER_IMAGE):$(PG_DOCKER_TAG) > /dev/null
 	@echo "Waiting for Postgres to be ready..."
 	while true; do \
@@ -138,3 +139,9 @@ $(VENV_BIN)/activate:
 	$(VENV_CMD) $(VENV_DIR)
 	$(VENV_BIN)/python -m pip install -U pip setuptools wheel
 	$(VENV_BIN)/pip install black isort
+
+.PHONY: clean
+clean:
+	$(DOCKER) rm -f $(GOGO_DOCKER_CONTAINER_NAME) $(PG_DOCKER_CONTAINER_NAME) || true
+	rm -rf $(PG_DATA_LOCAL)/* || true
+	rm -rf $(VENV_DIR) || true
