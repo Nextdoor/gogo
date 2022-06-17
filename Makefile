@@ -22,7 +22,7 @@ define DOCKER_RUN_ARGS
 -it
 endef
 
-.PHONY: run stop test venv
+.PHONY: run stop venv
 
 run: stop
 	@touch envfile
@@ -31,13 +31,6 @@ run: stop
 
 stop:
 	@docker rm -f $(DOCKER_IMAGE) > /dev/null 2>&1 || true
-
-test: stop
-	@touch envfile
-	@echo "Testing $(DOCKER_IMAGE)"
-	@docker run $$ARGS $$INTERACTIVE_ARGS --entrypoint sh \
-		"$(DOCKER_IMAGE)" \
-		-c "cd /app/src/ && PYTHONPATH=. pytest $$TEST_ARGS --cov"
 
 venv:
 	@echo "Creating and updating venv."
