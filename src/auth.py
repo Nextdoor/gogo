@@ -80,7 +80,9 @@ def query_user(credentials, hosted_domain):
 
 
 def get_current_user():
-    if flask.current_app.config["USE_HEADER_AUTH"]:
+    if flask.current_app.config["SKIP_AUTH"]:
+        return "anonymous"
+    elif flask.current_app.config["USE_HEADER_AUTH"]:
         return get_current_user_from_header()
     elif flask.current_app.config["USE_GOOGLE_AUTH"]:
         return get_current_user_from_session()
