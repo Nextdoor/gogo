@@ -1,4 +1,5 @@
 """URL shortcut generator."""
+import logging
 import os
 
 import flask
@@ -10,7 +11,7 @@ from models import Shortcut, db
 
 # Shortcuts may not use these names.
 RESERVED_NAMES = {"_create", "_delete", "_edit", "_list", "_ajax"}
-HTTPS_REDIRECT_URL = os.getenv("HTTPS_REDIRECT_URL", "https://localhost:8443")
+HTTPS_REDIRECT_URL = os.getenv("HTTPS_REDIRECT_URL", "https://localhost")
 
 
 class DashboardView(BaseListView):
@@ -182,5 +183,5 @@ class Healthz(MethodView):
             db.engine.execute("SELECT 1")
             return "OK"
         except Exception as e:
-            print("Healthz failed: %s" % e)
+            logging.getLogger(__name__).error("Healthz failed: %s", e)
             return "Fail", 500
