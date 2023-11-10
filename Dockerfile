@@ -1,4 +1,4 @@
-FROM python:3.6.5-stretch
+FROM python:3.7-bullseye
 
 # Env var to force update of the image. Increment for each time this is needed
 ENV CACHE_BUSTER_VAR=1
@@ -17,6 +17,7 @@ RUN mkdir -p /app/ssl && cd /app/ssl && \
 
 # Set up gogo.
 ADD resources/requirements.txt /app/resources/requirements.txt
+RUN pip install setuptools==45
 RUN pip install -r /app/resources/requirements.txt && pip freeze
 
 ADD resources /app/resources/

@@ -14,6 +14,17 @@ RESERVED_NAMES = {"_create", "_delete", "_edit", "_list", "_ajax"}
 HTTPS_REDIRECT_URL = os.getenv("HTTPS_REDIRECT_URL", "https://localhost")
 
 
+def _replace_placeholders(input_string, token_string):
+    placeholder_count = input_string.count("%s")
+    token_count = token_string.count("/") + 1
+    if placeholder_count > token_count:
+        return None
+
+    tokens = token_string.split("/", placeholder_count-1)
+    replaced_string = input_string.replace("%s", "{}").format(*tokens)
+    return replaced_string
+
+
 class DashboardView(BaseListView):
     template = "dashboard.html"
 
@@ -159,15 +170,18 @@ class ShortcutRedirectView(MethodView):
                 and shortcut.secondary_url
                 and "%s" in shortcut.secondary_url
             ):
+                formatted_url = _replace_placeholders(str(shortcut.secondary_url), secondary_arg)
+                if not formatted_url:
+                    flask.abort(400)
+                
                 response = flask.make_response(
-                    flask.redirect(
-                        str(shortcut.secondary_url).replace("%s", secondary_arg)
-                    )
+                    flask.redirect(formatted_url)
                 )
             else:
                 response = flask.make_response(
                     flask.redirect(str(shortcut.url), code=301)
                 )
+
             response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
             return response
 
