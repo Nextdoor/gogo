@@ -1,6 +1,6 @@
 FROM python:3.12-alpine3.19
 
-RUN apk add nginx jq openssl libpq-dev build-base
+RUN apk add nginx jq openssl libpq-dev build-base bash
 
 # Generate SSL certs.
 RUN mkdir -p /app/ssl && cd /app/ssl && \
