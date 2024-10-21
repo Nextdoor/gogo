@@ -1,0 +1,34 @@
+---
+name: release-drafter
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  release-drafter:
+    permissions:
+      # write permission is required to create a github release
+      contents: write
+      pull-requests: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Next Version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ github.token }}
+          branch: main
+          majorList: breaking
+          minorList: feat, feature
+          patchList: fix, bugfix, perf, refactor, test, tests, chore
+
+      - uses: release-drafter/release-drafter@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          commitish: main
+          disable-autolabeler: true
+          version: ${{ steps.semver.outputs.next }}
+
