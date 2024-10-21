@@ -7,10 +7,25 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: |
+            docker.pkg.github.com/nextdoor/gogo/gogo
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}.{{patch}}
+            type=sha
+
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v6
         with:
           push: false
           registry: docker.pkg.github.com
           repository: nextdoor/gogo/gogo
-          tag_with_ref: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
