@@ -12,6 +12,16 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: |
+            ghcr.io/nextdoor/gogo
+          tags: |
+            type=ref,event=tag
+
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v6
         with:
@@ -19,5 +29,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
           repository: nextdoor/gogo
-          tag_with_ref: true
           push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
