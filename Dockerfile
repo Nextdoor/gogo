@@ -1,12 +1,6 @@
-FROM python:3.7-bullseye
+FROM python:3.12-alpine3.19
 
-# Env var to force update of the image. Increment for each time this is needed
-ENV CACHE_BUSTER_VAR=1
-
-RUN apt-get update && \
-    apt-get install -y nginx jq && \
-    apt-get autoclean && \
-    rm -rf /var/lib/apt/cache
+RUN apk add nginx jq openssl libpq-dev build-base bash
 
 # Generate SSL certs.
 RUN mkdir -p /app/ssl && cd /app/ssl && \

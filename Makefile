@@ -46,6 +46,7 @@ run: stop docker_build
 		--hostname $(GOGO_HOST) \
 		--publish 80:80 \
 		--publish 443:443 \
+		--publish 5000:5000 \
 		--env CONFIG=DevelopmentConfig \
 		--env SKIP_AUTH=$(SKIP_AUTH) \
 		$(AUTH_HEADER_NAME_ENV) \

@@ -73,7 +73,7 @@ if [ -z "$AUTH_HEADER_NAME" ] && [ "$SKIP_AUTH" == "false" ]; then
     fi
 fi
 
-test -z "${DISABLE_NGINX}" && /usr/sbin/nginx -c /app/resources/nginx.conf -p /app/ &
+test -z "${DISABLE_NGINX}" && /usr/sbin/nginx -c /app/resources/nginx.conf &
 
 export APP_SETTINGS="config.${CONFIG}"
 
