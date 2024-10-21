@@ -12,8 +12,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: |
-            docker.pkg.github.com/nextdoor/gogo/gogo
+          images: docker.pkg.github.com/nextdoor/gogo/gogo
           tags: |
             type=ref,event=branch
             type=ref,event=tag
@@ -25,7 +24,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: false
-          registry: docker.pkg.github.com
-          repository: nextdoor/gogo/gogo
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
