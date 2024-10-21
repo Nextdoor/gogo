@@ -24,6 +24,7 @@ jobs:
             type=ref,event=tag
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}.{{patch}}
+            type=sha
 
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v6

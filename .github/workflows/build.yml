@@ -13,12 +13,13 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: |
-            ghcr.io/nextdoor/gogo
+            docker.pkg.github.com/nextdoor/gogo/gogo
           tags: |
             type=ref,event=branch
             type=ref,event=tag
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}.{{patch}}
+            type=sha
 
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v6
