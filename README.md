@@ -23,6 +23,22 @@ Built with Flask, Python 3.6, with Postgres and Google OAuth.
 
 ## Local development
 
+## Prereq (Mac/M1)
+
+Must install the Postgres development libraries in order to properly build a
+Virtual Environment for Python with Pyscopg2:
+
+```bash
+% brew install postgresql
+
+==> Downloading https://formulae.brew.sh/api/formula.jws.json
+...
+% make venv
+...
+```
+
+## Database Setup
+
 Uses docker.
 
 Run `make db` to initialize the database first.
