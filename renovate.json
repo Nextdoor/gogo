@@ -9,16 +9,6 @@
   "schedule": ["before 5am on monday"],
   "packageRules": [
     {
-      "groupName": "boto",
-      "matchManagers": ["pip_requirements"],
-      "matchPackageNames": ["boto3", "botocore"]
-    },
-    {
-      "groupName": "flask",
-      "matchManagers": ["pip_requirements"],
-      "matchPackageNames": ["flask", "Werkzeug"]
-    },
-    {
       "groupName": "python",
       "matchManagers": ["pip_requirements"]
     }
