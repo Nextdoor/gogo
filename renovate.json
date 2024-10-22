@@ -2,5 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "automerge": true,
+  "automergeType": "pr",
+  "platformAutomerge": true,
+  "schedule": ["before 5am on monday"],
+  "packageRules": [
+    {
+      "groupName": "boto",
+      "matchManagers": ["pip_requirements"],
+      "matchPackageNames": ["boto3", "botocore"]
+    }
   ]
 }
