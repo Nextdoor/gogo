@@ -11,7 +11,7 @@ RUN mkdir -p /app/ssl && cd /app/ssl && \
 
 # Set up gogo.
 ADD resources/requirements.txt /app/resources/requirements.txt
-RUN pip install setuptools==45
+RUN pip install setuptools
 RUN pip install -r /app/resources/requirements.txt && pip freeze
 
 ADD resources /app/resources/
