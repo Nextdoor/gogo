@@ -25,5 +25,5 @@ s3transfer==0.1.11
 six==1.16.0
 SQLAlchemy==1.4.54
 uritemplate==3.0.1
-urllib3==1.26.19
+urllib3==1.26.20
 Werkzeug==0.15.3
