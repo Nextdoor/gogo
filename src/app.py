@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, g
-from werkzeug.contrib.fixers import ProxyFix
+from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.routing import BaseConverter
 
 import auth
@@ -63,6 +63,5 @@ app.add_url_rule("/_ajax/search", view_func=search.SearchView.as_view("search"))
 db.init_app(app)
 
 if __name__ == "__main__":
-    db.init_app(app)
     auth.init_app(app)
     app.run()
