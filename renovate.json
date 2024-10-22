@@ -16,7 +16,11 @@
     {
       "groupName": "flask",
       "matchManagers": ["pip_requirements"],
-      "matchPackageNames": ["flas", "Werkzeug"]
+      "matchPackageNames": ["flask", "Werkzeug"]
+    },
+    {
+      "groupName": "python",
+      "matchManagers": ["pip_requirements"]
     }
   ]
 }
