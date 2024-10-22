@@ -8,6 +8,7 @@ from flask.views import MethodView
 import auth
 from base_list_view import BaseListView
 from models import Shortcut, db
+from sqlalchemy.sql import  text
 
 # Shortcuts may not use these names.
 RESERVED_NAMES = {"_create", "_delete", "_edit", "_list", "_ajax"}
@@ -173,7 +174,7 @@ class ShortcutRedirectView(MethodView):
                 formatted_url = _replace_placeholders(str(shortcut.secondary_url), secondary_arg)
                 if not formatted_url:
                     flask.abort(400)
-                
+
                 response = flask.make_response(
                     flask.redirect(formatted_url)
                 )
@@ -194,7 +195,7 @@ class ShortcutRedirectView(MethodView):
 class Healthz(MethodView):
     def get(self):
         try:
-            db.engine.execute("SELECT 1")
+            db.session.execute(text("SELECT 1"))
             return "OK"
         except Exception as e:
             logging.getLogger(__name__).error("Healthz failed: %s", e)
