@@ -12,6 +12,11 @@
       "groupName": "boto",
       "matchManagers": ["pip_requirements"],
       "matchPackageNames": ["boto3", "botocore"]
+    },
+    {
+      "groupName": "flask",
+      "matchManagers": ["pip_requirements"],
+      "matchPackageNames": ["flas", "Werkzeug"]
     }
   ]
 }
