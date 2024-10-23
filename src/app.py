@@ -53,7 +53,7 @@ app.add_url_rule(
 )
 app.add_url_rule("/_edit", view_func=gogo.EditShortcutView.as_view("edit_shortcut"))
 app.add_url_rule(
-    '/<regex(".+"):name>',
+    '/<path:name>',
     view_func=gogo.ShortcutRedirectView.as_view("shortcut_redirect"),
 )
 
