@@ -1,9 +1,9 @@
-boto3==1.39.14
-botocore==1.39.14
-certifi==2025.7.14
+boto3==1.40.1
+botocore==1.40.1
+certifi==2025.8.3
 chardet==5.2.0
 click==8.2.1
-docutils==0.21.2
+docutils==0.22
 Flask==3.1.1
 Flask-SQLAlchemy==3.1.1
 google-api-python-client==2.177.0
@@ -23,7 +23,7 @@ requests==2.32.4
 rsa==4.9.1
 s3transfer==0.13.1
 six==1.17.0
-SQLAlchemy==2.0.41
+SQLAlchemy==2.0.42
 uritemplate==4.2.0
 urllib3==2.5.0
 Werkzeug==3.1.3
