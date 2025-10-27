@@ -1,5 +1,5 @@
-boto3==1.40.55
-botocore==1.40.55
+boto3==1.40.59
+botocore==1.40.59
 certifi==2025.10.5
 chardet==5.2.0
 click==8.3.0
