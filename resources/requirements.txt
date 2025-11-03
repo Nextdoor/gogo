@@ -1,12 +1,12 @@
-boto3==1.40.59
-botocore==1.40.59
+boto3==1.40.64
+botocore==1.40.64
 certifi==2025.10.5
 chardet==5.2.0
 click==8.3.0
 docutils==0.22.2
 Flask==3.1.2
 Flask-SQLAlchemy==3.1.1
-google-api-python-client==2.185.0
+google-api-python-client==2.186.0
 httplib2==0.31.0
 idna==3.11
 itsdangerous==2.2.0
