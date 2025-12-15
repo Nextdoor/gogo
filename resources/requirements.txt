@@ -1,5 +1,5 @@
-boto3==1.42.4
-botocore==1.42.4
+boto3==1.42.9
+botocore==1.42.9
 certifi==2025.11.12
 chardet==5.2.0
 click==8.3.1
@@ -23,7 +23,7 @@ requests==2.32.5
 rsa==4.9.1
 s3transfer==0.16.0
 six==1.17.0
-SQLAlchemy==2.0.44
+SQLAlchemy==2.0.45
 uritemplate==4.2.0
-urllib3==2.6.0
+urllib3==2.6.2
 Werkzeug==3.1.4
