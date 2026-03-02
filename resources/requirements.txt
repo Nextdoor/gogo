@@ -1,6 +1,6 @@
-boto3==1.42.54
-botocore==1.42.54
-certifi==2026.1.4
+boto3==1.42.59
+botocore==1.42.59
+certifi==2026.2.25
 chardet==6.0.0.post1
 click==8.3.1
 docutils==0.22.4
@@ -23,7 +23,7 @@ requests==2.32.5
 rsa==4.9.1
 s3transfer==0.16.0
 six==1.17.0
-SQLAlchemy==2.0.46
+SQLAlchemy==2.0.47
 uritemplate==4.2.0
 urllib3==2.6.3
 Werkzeug==3.1.6
