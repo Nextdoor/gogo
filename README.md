@@ -10,7 +10,7 @@ If a go link does not exist, it will prompt you to create that link.
 
 ## Design
 
-Built with Flask, Python 3.6, with Postgres and Google OAuth.
+Built with Flask, Python 3, with Postgres and Google OAuth.
 
 ## Endpoints
 
@@ -26,7 +26,7 @@ Built with Flask, Python 3.6, with Postgres and Google OAuth.
 ## Prereq (Mac/M1)
 
 Must install the Postgres development libraries in order to properly build a
-Virtual Environment for Python with Pyscopg2:
+Virtual Environment for Python with Psycopg2:
 
 ```bash
 % brew install postgresql
@@ -43,7 +43,7 @@ Uses docker.
 
 Run `make db` to initialize the database first.
 
-OAuth is required. Secrets can be provided either by direct environment variables or by KMS blobs in environment variables. If using KMS, you'll need to be authenticated to AWS to decrypt the  blobs. `~/.aws` is volume mounted.
+OAuth is required. Secrets can be provided either by direct environment variables or by KMS blobs in environment variables. If using KMS, you'll need to be authenticated to AWS to decrypt the blobs. `~/.aws` is volume mounted.
 
 When ready, just run `make` to build and run the docker container.
 
@@ -69,7 +69,7 @@ OAuth: One of Built-In Google OAuth or Header-Based Auth must be used.
 
 | Key | Description |
 |-----|-------------|
-| `BASE_URL` | The full qualified DNS name that the server will run on, like 'https://gogo.com/'. |
+| `BASE_URL` | The fully qualified DNS name that the server will run on, like 'https://gogo.com/'. |
 | `GOOGLE_CLIENT_ID` | Your Google App ID. |
 | `GOOGLE_CLIENT_SECRET` | Your Google Client Secret. |
 | `GOOGLE_CLIENT_SECRET_KMS_BLOB` | Alternative to `GOOGLE_CLIENT_SECRET` - KMS Encrypted Google Client Secret. |
