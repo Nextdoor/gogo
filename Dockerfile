@@ -1,5 +1,7 @@
 FROM python:3.13-alpine3.20
 
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+
 RUN apk add nginx jq openssl libpq-dev build-base bash
 
 # Generate SSL certs.
@@ -9,15 +11,17 @@ RUN mkdir -p /app/ssl && cd /app/ssl && \
                 -days 36500 -subj '/CN=gogo' && \
     openssl dhparam -dsaparam -out dhparam.pem 4096
 
-# Set up gogo.
-ADD resources/requirements.txt /app/resources/requirements.txt
-RUN pip install setuptools
-RUN pip install -r /app/resources/requirements.txt && pip freeze
+# Install dependencies using uv.
+COPY pyproject.toml uv.lock /app/
+WORKDIR /app
+RUN uv sync --frozen --no-dev
 
 ADD resources /app/resources/
 ADD static /app/static/
 ADD templates /app/templates/
 ADD src /app/src/
+
+ENV PATH="/app/.venv/bin:$PATH"
 
 EXPOSE 80 443 5000
 ENTRYPOINT ["/app/resources/entrypoint.sh"]
