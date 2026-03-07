@@ -9,14 +9,23 @@ dependencies = [
     "flask-sqlalchemy>=3.1",
     "google-api-python-client>=2.190",
     "oauth2client>=4.1",
-    "psycopg2>=2.9",
+    "psycopg2-binary>=2.9",
 ]
 
 [dependency-groups]
 dev = [
     "black",
     "isort",
+    "pytest",
+    "pytest-cov",
 ]
 
 [tool.uv]
 package = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+source = ["src"]

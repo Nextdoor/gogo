@@ -124,6 +124,15 @@ db-apply-schema:
 		SQL_FILE=schema/schema.sql $(MAKE) db-run-file; \
 	fi
 
+# Testing
+.PHONY: test
+test:
+	uv run pytest
+
+.PHONY: test-cov
+test-cov:
+	uv run pytest --cov --cov-report=term-missing
+
 # Dev Env
 .PHONY: venv
 venv:
