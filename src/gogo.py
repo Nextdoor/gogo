@@ -188,6 +188,7 @@ class ShortcutRedirectView(MethodView):
 
         template_values = {
             "name": name,
+            "base_url": HTTPS_REDIRECT_URL,
         }
         return flask.render_template("create.html", **template_values)
 
