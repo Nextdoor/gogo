@@ -5,38 +5,26 @@
 <div id="all-shortcuts">
   <h2>All Shortcuts</h2>
   <table class="table table-striped table-bordered table-condensed">
-    <colgroup>
-      <col width="10%">
-      <col width="10%">
-      <col width="10%">
-      <col width="25%">
-      <col width="25%">
-      <col width="10%">
-      <col width="10%">
-    </colgroup>
     <thead>
       <tr>
-        <th class="sortColumn" data-val="name">Shortcut</th>
-        <th class="sortColumn" data-val="owner">Owner</th>
-        <th class="sortColumn" data-val="dateCreated">Date Created</th>
-        <th class="sortColumn" data-val="url">URL</th>
-        <th class="sortColumn" data-val="secondaryUrl">Secondary URL</th>
-        <th class="sortColumn" data-val="hits">Hits</th>
-        <th>Edit</th>
+        <th class="sortColumn col-shrink" data-val="name">Shortcut</th>
+        <th class="sortColumn col-shrink" data-val="owner">Owner</th>
+        <th class="sortColumn col-shrink" data-val="dateCreated">Date Created</th>
+        <th class="sortColumn col-wide" data-val="url">URL</th>
+        <th class="sortColumn col-narrow" data-val="secondaryUrl">Secondary URL</th>
+        <th class="sortColumn col-shrink" data-val="hits">Hits</th>
+        <th class="col-shrink">Actions</th>
       </tr>
     </thead>
     {%- for s in shortcuts %}
     <tr>
-      <td class="hide-overflow">go/{{ s.name }}</td>
-      <td class="hide-overflow">{{ s.owner }}</td>
-      <td class="hide-overflow">{{ s.created_at }}</td>
-      <td class="hide-overflow"><a href="{{ s.url }}">{{ s.url }}</a></td>
-      <td class="hide-overflow">{{ s.secondary_url if s.secondary_url != None else '' }}</td>
-      <td class="hide-overflow">{{ s.hits }}</td>
-      <td>
-          <a href="_edit?name={{ s.name }}"><i class="icon-pencil"></i></a>
-          <a href="_delete?name={{ s.name }}"><i class="icon-remove"></i></a>
-      </td>
+      <td class="col-shrink">go/{{ s.name }}</td>
+      <td class="col-shrink">{{ s.owner }}</td>
+      <td class="col-shrink">{{ s.created_at }}</td>
+      <td class="col-wide"><a href="{{ s.url }}">{{ s.url }}</a></td>
+      <td class="col-narrow">{{ s.secondary_url if s.secondary_url != None else '' }}</td>
+      <td class="col-shrink">{{ s.hits }}</td>
+      <td><a href="_edit?name={{ s.name }}"><img class="icon-pencil"></img></a><a href="_delete?name={{ s.name }}"><img class="icon-remove"></img></a></td>
     </tr>
     {%- endfor %}
   </table>

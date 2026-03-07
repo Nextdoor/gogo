@@ -71,12 +71,12 @@ function setSearchResults(results) {
                 result.secondary_url = '';
             }
             const newRow = '<tr>' +
-                '<td class="hide-overflow">go/' + result.name + '</td>' +
-                '<td class="hide-overflow">' + result.owner + '</td>' +
-                '<td class="hide-overflow">' + result.url + '</td>' +
-                '<td class="hide-overflow">' + result.secondary_url + '</td>' +
-                '<td class="hide-overflow">' + result.hits + '</td>' +
-                '<td><a href="_edit?name=' + result.name + '"><i class="icon-pencil"></i></a></td>' +
+                '<td class="col-shrink">go/' + result.name + '</td>' +
+                '<td class="col-shrink">' + result.owner + '</td>' +
+                '<td class="col-wide">' + result.url + '</td>' +
+                '<td class="col-narrow">' + result.secondary_url + '</td>' +
+                '<td class="col-shrink">' + result.hits + '</td>' +
+                '<td class="col-shrink"><a href="_edit?name=' + result.name + '"><img class="icon-pencil"></img></a></td>' +
                 '</tr>';
             $searchResults.find('tbody').append(newRow);
         }

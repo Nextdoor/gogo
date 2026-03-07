@@ -4,11 +4,25 @@ body {
 }
 
 table {
-    table-layout: fixed;
+    table-layout: auto;
 }
 
-.hide-overflow {
+.col-shrink {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.col-wide {
     overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0;
+}
+
+.col-narrow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0;
+    width: 20%;
 }
 
 .sortColumn:hover {
