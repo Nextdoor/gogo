@@ -8,7 +8,7 @@ from flask.views import MethodView
 import auth
 from base_list_view import BaseListView
 from models import Shortcut, db
-from sqlalchemy.sql import  text
+from sqlalchemy.sql import text
 
 # Shortcuts may not use these names.
 RESERVED_NAMES = {"_create", "_delete", "_edit", "_list", "_ajax"}
@@ -188,6 +188,7 @@ class ShortcutRedirectView(MethodView):
 
         template_values = {
             "name": name,
+            "base_url": HTTPS_REDIRECT_URL,
         }
         return flask.render_template("create.html", **template_values)
 
