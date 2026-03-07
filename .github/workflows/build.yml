@@ -1,6 +1,19 @@
-name: Build Docker image
+name: Build and Test
 on: [pull_request]
 jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v6
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Run tests
+        run: uv run pytest --cov --cov-report=term-missing
+
   build:
     name: Build Docker Image
     runs-on: ubuntu-latest
