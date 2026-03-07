@@ -6,8 +6,8 @@ GoGo is a "go link" URL shortener (e.g., `go/shortname` -> full URL). Flask + Py
 
 ```bash
 # Prerequisites (macOS)
-brew install postgresql        # needed for psycopg2 build
-make venv                      # creates .venv with deps + black + isort
+brew install postgresql uv     # postgresql needed for psycopg2 build
+make venv                      # creates .venv with deps + black + isort (uses uv)
 
 # Docker-based local dev
 make db                        # start + initialize Postgres container
@@ -23,7 +23,7 @@ make db-wipe                   # drop and recreate the database
 COMMAND='SELECT ...' make db-run-command  # run arbitrary SQL
 ```
 
-Format with `black` and `isort` from the venv.
+Format with `uv run black` and `uv run isort`.
 
 ## Architecture
 

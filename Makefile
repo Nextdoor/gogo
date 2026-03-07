@@ -1,8 +1,4 @@
-
 ROOT_DIR   := $(shell git rev-parse --show-toplevel)
-VENV_CMD   := python3 -m venv
-VENV_DIR   := $(ROOT_DIR)/.venv
-VENV_BIN   := $(VENV_DIR)/bin
 
 # Docker Build Flags
 DOCKER     ?= $(shell which docker)
@@ -130,19 +126,11 @@ db-apply-schema:
 
 # Dev Env
 .PHONY: venv
-venv: $(VENV_BIN)/activate
-	if [ "$$(cat resources/requirements.txt | sort)" != "$$($(VENV_BIN)/pip freeze)" ]; then \
-		$(VENV_BIN)/pip install -Ur resources/requirements.txt; \
-	fi
-
-$(VENV_BIN)/activate:
-	@echo "Creating and updating venv..."
-	$(VENV_CMD) $(VENV_DIR)
-	$(VENV_BIN)/python -m pip install -U pip setuptools wheel
-	$(VENV_BIN)/pip install black isort
+venv:
+	uv sync
 
 .PHONY: clean
 clean:
 	$(DOCKER) rm -f $(GOGO_DOCKER_CONTAINER_NAME) $(PG_DOCKER_CONTAINER_NAME) || true
 	rm -rf $(PG_DATA_LOCAL)/* || true
-	rm -rf $(VENV_DIR) || true
+	rm -rf $(ROOT_DIR)/.venv || true

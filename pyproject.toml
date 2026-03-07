@@ -1,0 +1,22 @@
+[project]
+name = "gogo"
+version = "0.2.9"
+description = "A go link URL shortener"
+requires-python = ">=3.10"
+dependencies = [
+    "boto3>=1.42",
+    "flask>=3.1",
+    "flask-sqlalchemy>=3.1",
+    "google-api-python-client>=2.190",
+    "oauth2client>=4.1",
+    "psycopg2>=2.9",
+]
+
+[dependency-groups]
+dev = [
+    "black",
+    "isort",
+]
+
+[tool.uv]
+package = false
