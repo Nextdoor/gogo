@@ -1,4 +1,13 @@
 /**
+ * Escapes a string for safe insertion into HTML.
+ */
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
+
+/**
  * Adds an alert to the top of the page.
  */
 function addAlert(message, type) {
@@ -71,12 +80,12 @@ function setSearchResults(results) {
                 result.secondary_url = '';
             }
             const newRow = '<tr>' +
-                '<td class="col-shrink">go/' + result.name + '</td>' +
-                '<td class="col-shrink">' + result.owner + '</td>' +
-                '<td class="col-wide">' + result.url + '</td>' +
-                '<td class="col-narrow">' + result.secondary_url + '</td>' +
-                '<td class="col-shrink">' + result.hits + '</td>' +
-                '<td class="col-shrink"><a href="_edit?name=' + result.name + '"><img class="icon-pencil"></img></a></td>' +
+                '<td class="col-shrink">go/' + escapeHtml(result.name) + '</td>' +
+                '<td class="col-shrink">' + escapeHtml(result.owner) + '</td>' +
+                '<td class="col-wide">' + escapeHtml(result.url) + '</td>' +
+                '<td class="col-narrow">' + escapeHtml(result.secondary_url) + '</td>' +
+                '<td class="col-shrink">' + escapeHtml(String(result.hits)) + '</td>' +
+                '<td class="col-shrink"><a href="_edit?name=' + encodeURIComponent(result.name) + '"><img class="icon-pencil"></img></a></td>' +
                 '</tr>';
             $searchResults.find('tbody').append(newRow);
         }
