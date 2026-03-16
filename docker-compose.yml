@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:10.21
+    image: postgres:18.3
     environment:
       POSTGRES_USER: gogo
       POSTGRES_PASSWORD: gogo
