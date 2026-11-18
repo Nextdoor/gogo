@@ -1,8 +1,15 @@
-FROM python:3.13-alpine3.20
+FROM python:3.13-alpine3.22
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-RUN apk add nginx jq openssl libpq-dev build-base bash
+RUN apk add jq openssl libpq-dev build-base bash
+
+# nginx from the upstream nginx.org stable channel; Alpine's package lags. Must be >= 1.30.7.
+ARG NGINX_VERSION=1.30.7-r1
+RUN wget -qO /etc/apk/keys/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub && \
+    echo "@nginx https://nginx.org/packages/alpine/v$(cut -d. -f1,2 /etc/alpine-release)/main" >> /etc/apk/repositories && \
+    apk add --no-cache "nginx@nginx=${NGINX_VERSION}" && \
+    nginx -v
 
 # Generate SSL certs.
 RUN mkdir -p /app/ssl && cd /app/ssl && \
